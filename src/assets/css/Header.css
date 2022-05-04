@@ -1,0 +1,35 @@
+/* small-header */
+#psihologie_header {
+	padding: 5px 15px;
+    background: linear-gradient(#fff,#e5e5e5);
+    width: 100%;
+}
+
+.row{
+   
+    max-width: 75rem; 
+    margin-right: auto; 
+    margin-left: auto;
+}
+
+@media screen and (min-width: 64em){
+#psihologie_header {
+    height: 115px;
+    padding: 10px 30px;
+    background: url(../images/psihologie_header.jpg) no-repeat;
+}
+
+#psihologie_header #stanga_sus {
+    float: left;
+    width: 270px;
+    padding-top: 5px;
+}
+#psihologie_header #dreapta_sus {
+margin-left: auto;
+margin-right: 30px;
+width: 400px;
+padding-top: 5px;
+}
+
+
+}
