@@ -25,12 +25,6 @@ const Login = () => {
 
   return (
     <div className="login-page">
-        <div class="layer">
-          <div className="row1-header">
-            <Header/>
-          </div>
-
-          <div className="row2-content">
             <Container 
             component="main" 
             maxWidth="xs" 
@@ -79,8 +73,6 @@ const Login = () => {
                 </Box>
                 </Box>
             </Container> 
-            </div>
-      </div>
       </div>
   );
 };

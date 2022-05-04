@@ -2,11 +2,10 @@ import * as React from 'react';
 import "../assets/css/Header.css";
 import '@fontsource/roboto/300.css';
 
-
-
 const Header = () => {
 
   return (
+	  <div className='header'>
         <div class="row" id="psihologie_header">
 			<div class="small-4 medium-4 large-4 columns" id="stanga_sus">
 				<a href="https://www.ubbcluj.ro" target="_parent">
@@ -19,6 +18,7 @@ const Header = () => {
 				</a>
 			</div> 
 		</div> 
+	</div>
 );
 };
 export default Header;

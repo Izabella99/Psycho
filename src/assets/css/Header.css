@@ -5,11 +5,14 @@
     width: 100%;
 }
 
+.header{
+    background-color: #eee;   
+}
+
 .row{
-   
     max-width: 75rem; 
     margin-right: auto; 
-    margin-left: auto;
+    margin-left: auto; 
 }
 
 @media screen and (min-width: 64em){
