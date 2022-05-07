@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div className="home-page">
-        <div class="layer">
+        <div className="layer">
             <Header/>
             <Login/> 
         </div>
