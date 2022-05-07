@@ -39,6 +39,15 @@
     width: fit-content;
   }
 
+  .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary {
+    background-color: rgb(243, 243, 243);
+  }
+  
+  .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+
   .MuiButton-root{
     width: 100px !important;
     display: block !important;
