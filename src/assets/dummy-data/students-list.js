@@ -1,0 +1,38 @@
+export const students = [
+    {
+        student: 'John Doe',
+        field: 'Behavioral psychology',
+        email: 'jd@gmail.com',
+        nr_matricol: '123456789',
+        fdi: 'De la distantă',
+        topic: 'Topic 1',
+        coordonator: 'John Doe',
+    },
+    {
+        student: 'John Doe2',
+        field: 'Behavioral psychology',
+        email: 'jd@gmail.com',
+        nr_matricol: '123456789',
+        fdi: 'De la distantă',
+        topic: 'Topic 2',
+        coordonator: 'Ion Popescu',
+    },
+    {
+        student: 'John Doe3',
+        field: 'Behavioral psychology',
+        email: 'jd@gmail.com',
+        nr_matricol: '123456789',
+        fdi: 'De la distantă',
+        topic: 'Topic 3',
+        coordonator: 'Ion Popescu',
+    },
+    {
+        student: 'John Doe4',
+        field: 'Behavioral psychology',
+        email: 'jd@gmail.com',
+        nr_matricol: '123456789',
+        fdi: 'De la distantă',
+        topic: 'Topic 4',
+        coordonator: 'Ion Popescu2',
+    },
+];

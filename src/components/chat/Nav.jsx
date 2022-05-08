@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "../../assets/css/Nav.css";
-import { BsFillPeopleFill, BsFillPersonFill, BsFillChatFill } from 'react-icons/bs';
+import { BsFillPeopleFill, BsFillPersonFill, BsFillChatFill, BsFillPersonBadgeFill } from 'react-icons/bs';
 import { FaGraduationCap } from 'react-icons/fa';
 import { DiRequirejs } from "react-icons/di";
 
 function Nav() {
   return (
     <div className='nav'>
+            <Link to='/professors' className='nav-item'>
+                <BsFillPersonBadgeFill /> Professors
+            </Link>
             <Link to='/students' className='nav-item'>
                 <BsFillPeopleFill /> Students
             </Link>
