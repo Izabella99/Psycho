@@ -1,17 +1,20 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Chat from "./components/Chat";
 import Home from "./components/Home";
+import Chat from "./components/Chat";
+import {Routes, Route} from 'react-router-dom'
+import Header from "./components/Header";
+import AdminDashboard from './components/AdminDashboard'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" 
-        element={<div className="App"><Home /></div>} />
-        <Route path="chat" element={<Chat />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+   
+          <Routes>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="chat" element={<Chat />} />
+            <Route path="/dashboard" element={<AdminDashboard />}></Route>
+          </Routes>
+    </>
   );
 }
 

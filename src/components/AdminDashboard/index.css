@@ -1,0 +1,90 @@
+.grid{
+    height: 17rem;
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+    height: 16rem;
+    justify-content: space-around;
+    align-items: center;
+}
+.item-col{
+    display: flex;
+    flex-direction: column;
+    height: 16rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.item-requests-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.css-1633um2-MuiPaper-root{
+    padding: 1rem;
+}
+
+.wrapper{
+    /* width: 54rem; */
+}
+
+.admin{
+    background-color: #f1f1f1;
+    padding: 5rem;
+}
+
+.admin-dashboard-page{
+    
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+}
+
+.admin-dashboard-page > * {
+    margin-bottom: 3rem;
+}
+
+.admin-dashboard-title{
+    color: darkblue;
+}
+
+.admin-dashboard-students{
+    display: flex;
+    justify-content: space-around;
+}
+
+.admin-dashboard-students-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.number{
+    font-size: 2rem;
+    color: darkblue;
+}
+
+.export{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export-label{
+    margin-right: 1rem;
+}
+
+.export-select{
+    width: 15rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+
+.export-btn{
+    color: #fff;
+    background: darkblue;
+}

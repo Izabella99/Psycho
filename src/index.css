@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.grid .css-1633um2-MuiPaper-root{
+  padding-bottom: 1rem;
+  padding-top: 1rem ;
+}
+
+.export-select.css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+  margin-right: 2rem;
+}
+
+.MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary{
+  height: 2rem;
+}  
