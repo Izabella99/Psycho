@@ -1,0 +1,35 @@
+.f-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    background-color: #EBEBEB;
+}
+
+.f-layer {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 18% 82%; 
+    background-color: lightgrey;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+        grid-template-columns: 23% 77%;
+    }
+}
+
+.f-header {
+    width: 100%;
+}
+
+.chat-container {
+    height: 70vh;
+    width: 75vw;
+    border-radius: 10px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+        grid-template-columns: 35% 65%;
+    }
+}
