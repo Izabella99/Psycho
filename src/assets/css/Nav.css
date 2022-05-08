@@ -1,0 +1,30 @@
+.nav {
+    background-color: #003060;
+    border-radius: none;
+    height: 100vh;
+    width: 18vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.nav-item {
+    padding: 1rem;
+    margin-left: 1rem;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: gray;
+}
+
+.nav-footer {
+    position: absolute;
+    bottom: 0;
+    color: white;
+    padding: 1rem;
+}

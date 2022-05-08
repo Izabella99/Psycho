@@ -1,13 +1,17 @@
 import React from "react";
-import {Router, Route} from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Chat from "./components/Chat";
 import Home from "./components/Home";
-
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" 
+        element={<div className="App"><Home /></div>} />
+        <Route path="chat" element={<Chat />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
