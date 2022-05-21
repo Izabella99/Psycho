@@ -48,7 +48,7 @@
     transition: background-color 600000s 0s, color 600000s 0s;
   }
 
-  .MuiButton-root{
+  .login-page .MuiButton-root{
     width: 100px !important;
     display: block !important;
     margin-left: auto !important;

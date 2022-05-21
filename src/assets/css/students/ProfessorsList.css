@@ -1,0 +1,63 @@
+.f-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    background-color: #EBEBEB;
+}
+
+.f-layer {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 18% 82%; 
+    background-color: lightgrey;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+        grid-template-columns: 23% 77%;
+    }
+}
+
+.f-header {
+    width: 100%;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.MuiPaper-root{
+    box-shadow: none!important;
+}
+
+.MuiTable-root {
+
+    border-collapse: separate !important;
+    border-spacing: 0px 25px  !important;
+}
+.MuiTable-root thead>tr>th{
+    background-color:white;
+    padding: 0px 25px !important;
+    font-weight: bold;
+    color:  rgba(0, 48, 96, 100);
+}
+
+
+.MuiTable-root tbody>tr{
+    background-color: white;
+}
+
+.MuiTable-root tbody>tr>th{
+    font-size: 1rem !important;
+    font-weight: 600;
+    padding:25px !important;
+}
+.MuiTable-root th>p{
+    font-size: 0.8rem;
+    font-weight: 100;
+}
+.professorspage .MuiButton-root{
+    background-color:  #003060;
+}
