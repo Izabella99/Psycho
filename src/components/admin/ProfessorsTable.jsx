@@ -37,7 +37,7 @@ export default class ProfessorsTable extends Component {
               <TableCell align="right">{professor.nr_places}</TableCell>
               <TableCell align="right">{professor.nr_places_available}</TableCell>
               <TableCell>
-                <Button variant="contained">Remove</Button>
+                <Button variant="contained" sx={{backgroundColor: '#003060'}}>Remove</Button>
               </TableCell>
             </TableRow>
           ))}

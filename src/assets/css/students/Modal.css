@@ -1,0 +1,28 @@
+.modal-content{
+    padding:10px 20px;
+}
+.modal-body{
+    padding:30px 20px 0px 20px;
+}
+
+.modal-title>h4{
+    font-weight: 700;
+    color: rgb(7, 7, 7);
+}
+
+.btn-secondary{
+    background-color: transparent;
+    border: 1px solid #6c757d;
+    color: rgb(7, 7, 7);
+}
+.btn-primary{
+    background-color: rgba(0, 48, 96, 100)
+}
+
+.mb3>label{
+    color: rgb(7, 7, 7);
+}
+.modal-footer{
+    border: none;
+    padding-top:0px
+}

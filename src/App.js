@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import ProfessorsList from "./components/ProfessorsList";
-import StudentsList from "./components/StudentsList";
-import RequestsList from "./components/RequestsList";
+import ProfessorsList from "./components/students/ProfessorsList";
+import StudentsList from "./components/professors/StudentsList";
+import RequestsList from "./components/professors/RequestsList";
 import Chat from "./components/Chat";
 import Home from "./components/Home";
 import EditProfile from "./components/EditProfile";
@@ -18,7 +18,7 @@ function App() {
         <Route path="students" element={<StudentsList />} />
         <Route path="requests" element={<RequestsList />} />
         <Route path="profile" element={<EditProfile />} />
-            <Route path="/dashboard" element={<AdminDashboard />}></Route>
+        <Route path="/dashboard" element={<AdminDashboard />}></Route>
       </Routes>
   );
 }
