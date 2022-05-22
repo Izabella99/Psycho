@@ -1,15 +1,33 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
-export default class EditProfileC extends Component {
-  render() {
+const EditProfileTeacher = (teacher) => {
+    const nameRef = useRef(teacher.nume);
+    const emailRef = useRef(teacher.email);
+    const fieldRef = useRef(teacher.field);
+    const noOfPlacesRef = useRef(teacher.nr_places);
+    const noOfAvailablePlacesRef = useRef(teacher.nr_places_available);
+
+const updateTeacher = (newTeacher) => {
+    nameRef.current.value = newTeacher.nume;
+    emailRef.current.value = newTeacher.email;
+    fieldRef.current.value = newTeacher.nr_matricol;
+    noOfPlacesRef.current.value = newTeacher.forma_de_invatamant;
+    noOfAvailablePlacesRef.current.value = newTeacher.specializare;
+    }
+
+const handleEdit = () => {
+    const teacher = {email : emailRef.current.value, nume : nameRef.current.value, field : fieldRef.current.value, nr_places : noOfPlacesRef.current.value, nr_places_available : noOfAvailablePlacesRef.current.value};
+    axios.post('http://localhost:3001/api/professors', teacher)
+    .then(response => updateTeacher(response.data));
+    };
+
     return (
         <Container 
         component="main" 
@@ -61,11 +79,20 @@ export default class EditProfileC extends Component {
                 label="Number of places"
                 id="number_of_places"
                 />
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="number_of_avaib_places"
+                label="Number of available places"
+                id="number_of_avaib_places"
+                />
                 <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={handleEdit}
                 >
                 Edit
                 </Button>
@@ -73,5 +100,6 @@ export default class EditProfileC extends Component {
             </Box>
         </Container> 
     )
-  }
-}
+};
+
+export default EditProfileTeacher;
