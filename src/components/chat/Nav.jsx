@@ -61,16 +61,16 @@ function Nav() {
   } else if(role === 'admin') {
     return (
       <div className='nav'>
-        <Link to='/professors' className='nav-item'>
+        <Link to='/professorsListAdmin' className='nav-item'>
           <BsFillPersonBadgeFill /> Professors
         </Link>
-        <Link to='/students' className='nav-item'>
+        <Link to='/studentsListAdmin' className='nav-item'>
           <BsFillPeopleFill /> Students
         </Link>
         <Link to='/profile' className='nav-item'>
           <BsFillPersonFill /> Profile
         </Link>
-        <Link to='/requests' className='nav-item'>
+        <Link to='/requestsAdmin' className='nav-item'>
           <DiRequirejs /> Requests
         </Link>
         <Link to='/grades' className='nav-item'>

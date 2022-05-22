@@ -39,7 +39,7 @@ const ProfessorsSchema=new Schema({
     nr_places_available:Number});
 
 const StudentsSchema=new Schema({
-    nume:String,
+    name:String,
     email:String,
     nr_matricol:Number,
     forma_de_inavatamant:String,

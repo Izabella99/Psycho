@@ -59,11 +59,11 @@ const StudentsTable= () => {
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((student) => (
             <TableRow key={student.id}>
-              <TableCell component="th" scope="row" width="40%"> {student.nume}
+              <TableCell component="th" scope="row" width="40%"> {student.name}
               <Popup trigger={<Button id="info-button"> i</Button>} position="bottom center">
                 
                   <div className="popup-head">
-                    <p style={{color:'#003060',fontWeight:"700"}}>{student.nume}</p>
+                    <p style={{color:'#003060',fontWeight:"700"}}>{student.name}</p>
                     <p>{student.email}</p>
                   </div>
                   <p>Număr matricol:{student.nr_matricol}</p>
