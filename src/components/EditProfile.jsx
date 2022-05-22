@@ -6,27 +6,47 @@ import EditProfileStudent from './profiles/EditStudent';
 import EditProfileTeacher from './profiles/EditTeacher';
 
 
-export default class EditProfile extends Component {
-  render() {
+const EditProfile = (user, userType) => {
     const role = localStorage.getItem('role');
     if (role === 'student') {
         return (
             <div className="home-page">
                 <div className="layer">
                     <Header/>
-                    <EditProfileStudent/> 
+                    <EditProfileStudent user/> 
                 </div>
               </div>
           );
-    } else {
+    } else if (role === 'teacher' ){
         return (
             <div className="home-page">
                 <div className="layer">
                     <Header/>
-                    <EditProfileTeacher/> 
+                    <EditProfileTeacher user/> 
                 </div>
               </div>
           );   
+    } else {
+        if (userType == 'student') {
+            return (
+                <div className="home-page">
+                    <div className="layer">
+                        <Header/>
+                        <EditProfileStudent user/> 
+                    </div>
+                  </div>
+            );
+        } else {
+            return (
+                <div className="home-page">
+                    <div className="layer">
+                        <Header/>
+                        <EditProfileTeacher user/> 
+                    </div>
+                  </div>
+              );   
+        }
     }
-  }
-}
+};
+
+export default EditProfile;
