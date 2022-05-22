@@ -5,22 +5,23 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import '../../assets/css/Chat.css'
 import Nav from '../chat/Nav';
 import Header from '../Header';
+import axios from 'axios';
 
 import './index.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green'],
+let data = {
+  labels: ['Denied', 'Accepted', 'Rejected'],
   datasets: [
     {
       label: '# of Votes',
-      data: [12, 19, 3, 5],
+      data: [1, 5, 1],
       backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
@@ -48,6 +49,96 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Dashboard = () => {
   const [select, setSelect] = useState(1);
+  const [students, setStudents] = useState([]);
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+
+    axios.get('http://localhost:3001/api/students')
+    .then((response)=>{
+      const data=response.data; 
+      setStudents(data);
+    })
+    .catch((error)=>{
+      console.log("error",error);
+    })
+},[])
+
+useEffect(() => {
+
+  axios.get('http://localhost:3001/api/requests')
+  .then((response)=>{
+    const data=response.data; 
+    setRequests(data);
+  })
+  .catch((error)=>{
+    console.log("error",error);
+  })
+},[])
+
+const getStudentsWithCoordinator = () => {
+  var studentsWithCoordinator = 0;
+  for (let i = 0; i < students.length; i++) {
+    if (students[i].coordinator !== null && students[i].coordinator !== "" && students[i].coordinator !== undefined) {
+      studentsWithCoordinator++;
+    }
+  }
+  return studentsWithCoordinator;
+}
+
+const getStudentsWithoutCoordinator = () => {
+  var studentsWithoutCoordinator = 0;
+  for (let i = 0; i < students.length; i++) {
+    if (students[i].coordinator === null || students[i].coordinator === "" || students[i].coordinator === undefined) {
+      studentsWithoutCoordinator++;
+    }
+  }
+  return studentsWithoutCoordinator;
+}
+
+const getNoOfStudentsWithCoordinator = getStudentsWithCoordinator();
+const getNoOfStudentsWithoutCoordinator = getStudentsWithoutCoordinator();
+
+const getRequestsAccepted = () => {
+  var requestsAccepted = 0;
+  for(let i = 0; i < requests.length; i++) {
+    if (requests[i].status === "accepted") {
+      requestsAccepted++;
+    }
+  }
+
+  return requestsAccepted;
+}
+
+const getNoOfRequestsAccepted = getRequestsAccepted();
+
+const getRequestDenied = () => {
+  var requestsDenied = 0;
+  for(let i = 0; i < requests.length; i++) {
+    console.log(requests[i]);
+    if (requests[i].status === "rejected") {
+      requestsDenied++;
+    }
+  }
+
+  return requestsDenied;
+} 
+
+const getNoOfRequestsDenied = getRequestDenied();
+
+const getRequestsInPending = () => {
+  return (requests.length - getNoOfRequestsAccepted - getNoOfRequestsDenied);
+}
+
+const getNoOfRequestsInPending = getRequestsInPending();
+const getNoOfRequests = requests.length;
+const getTotalNoOfStudents = students.length;
+
+data.datasets.data = [];
+data.datasets.data = [{getNoOfRequestsInPending}, {getNoOfRequestsAccepted}, {getNoOfRequestsDenied}];
+/*data.datasets.data[0] = {getNoOfRequestsInPending};
+data.datasets.data[1] = {getNoOfRequestsAccepted};
+data.datasets.data[2] = {getNoOfRequestsDenied};*/
 
   return (
     <div className='f-layer'>
@@ -63,19 +154,19 @@ const Dashboard = () => {
             <div className='admin-dashboard-students'>
               <div className='admin-dashboard-students-col'>
                 <div>Students with coordinator</div>
-                <div className='number'>10</div>
+                <div className='number'>{getNoOfStudentsWithCoordinator}</div>
               </div>
               <div className='admin-dashboard-students-col'>
                 <div>Students without coordinator</div>
-                <div className='number'>22</div>
+                <div className='number'>{getNoOfStudentsWithoutCoordinator}</div>
               </div>
               <div className='admin-dashboard-students-col'>
                 <div>Internship students</div>
-                <div className='number'>53</div>
+                <div className='number'>{getNoOfStudentsWithoutCoordinator}</div>
               </div>
               <div className='admin-dashboard-students-col'>
-                <div>Available places</div>
-                <div className='number'>20</div>
+                <div>Total number of students</div>
+                <div className='number'>{getTotalNoOfStudents}</div>
               </div>
             </div>
           </div>
@@ -104,21 +195,21 @@ const Dashboard = () => {
                     <div className='item-requests-col'>
                       <div className=''>
                         <div>Requests sent</div>
-                        <div className='number'>10</div>
+                        <div className='number'>{getNoOfRequests}</div>
                       </div>
                       <div>
                         <div>Pending request</div>
-                        <div className='number'>22</div>
+                        <div className='number'>{getNoOfRequestsInPending}</div>
                       </div>
                     </div>
                     <div className='item-requests-col'>
                       <div>
                         <div>Accepted</div>
-                        <div className='number'>53</div>
+                        <div className='number'>{getNoOfRequestsAccepted}</div>
                       </div>
                       <div>
                         <div>Rejected</div>
-                        <div className='number'>20</div>
+                        <div className='number'>{getNoOfRequestsDenied}</div>
                       </div>
                     </div>
                   </Item>

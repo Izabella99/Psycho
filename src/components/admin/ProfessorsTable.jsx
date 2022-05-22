@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,42 +8,86 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { professors } from '../../assets/dummy-data/professors-list';
 import Button from '@mui/material/Button';
+import axios from 'axios';
+import { TablePagination } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
-export default class ProfessorsTable extends Component {
-  render() {
+export default function ProfessorsTable () {
+
+  const [professors, setProfessors] = useState([]);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    let navigate = useNavigate();
+    const [professorName, setProfessorName] = React.useState([]);
+
+
+    
+    useEffect(() => {
+
+        axios.get('http://localhost:3001/api/professors')
+        .then((response)=>{
+          const data=response.data; 
+          setProfessors(data);
+          console.log("Data has been Recived");
+        })
+        .catch((error)=>{
+          console.log("error",error);
+        })
+    },[])
+
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+
     return (
-        <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+      <div className="professorspage">
+    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "transparent" }}>
+    <TableContainer sx={{ backgroundColor: "transparent",  maxHeight: 520  }}>
+      <Table sx={{ minWidth: 500 }} stickyHeader aria-label="sticky table">
+        <TableHead sx={{ backgroundColor: "transparent"}}>
           <TableRow>
-            <TableCell>Nume</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Câmp</TableCell>
-            <TableCell align="right">Număr locuri</TableCell>
-            <TableCell align="right">Număr locuri disponibile</TableCell>
+            <TableCell>NUME</TableCell>
+            <TableCell align="left">DOMENIU</TableCell>
+            <TableCell align="left">NR LOCURI DISPONIBILE</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {professors.map((professor) => (
-            <TableRow
-              key={professor.name}
-            >
-              <TableCell component="th" scope="row">
-                {professor.name}
+          {professors
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((professor) => (
+            <TableRow key={professor.index}>
+              <TableCell component="th" scope="row" width="30%"> {professor.name}
+               <p align="left">{professor.email}</p>
               </TableCell>
-              <TableCell align="right">{professor.email}</TableCell>
-              <TableCell align="right">{professor.field}</TableCell>
-              <TableCell align="right">{professor.nr_places}</TableCell>
-              <TableCell align="right">{professor.nr_places_available}</TableCell>
+              <TableCell align="left">{professor.field}</TableCell>
+              <TableCell align="left">{professor.nr_places_available}</TableCell>
               <TableCell>
-                <Button variant="contained" sx={{backgroundColor: '#003060'}}>Remove</Button>
+                <Button variant="contained" onClick={() =>{ navigate('/profile', { state : { user : professor, userType : 'teacher'}})}}>Edit</Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <TablePagination
+    rowsPerPageOptions={[3, 6, 9]}
+    component="div"
+    count={professors.length}
+    rowsPerPage={rowsPerPage}
+    page={page}
+    onPageChange={handleChangePage}
+    onRowsPerPageChange={handleChangeRowsPerPage}
+  />
+  </Paper>
+  
+
+</div>
+
     );
-  }
-}
+};

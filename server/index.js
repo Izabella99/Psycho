@@ -30,31 +30,32 @@ const server = app.listen(port, () =>
 );
 
 //schema
-const Schema = mongoose.Schema;
-const ProfessorsSchema = new Schema({
-  email: String,
-  name: String,
-  field: String,
-  nr_places: Number,
-  nr_places_available: Number,
-});
+const Schema=mongoose.Schema;
+const ProfessorsSchema=new Schema({
+    email:String,
+    name:String,
+    field:String,
+    nr_places:Number,
+    nr_places_available:Number});
 
-const StudentsSchema = new Schema({
-  nume: String,
-  email: String,
-  nr_matricol: Number,
-  forma_de_inavatamant: String,
-  specializare: String,
-  topic: String,
-});
+const StudentsSchema=new Schema({
+    nume:String,
+    email:String,
+    nr_matricol:Number,
+    forma_de_inavatamant:String,
+    specializare:String,
+    topic:String,
+    coordinator:String});
 
-const RequestsSchema = new Schema({
-  studentName: String,
-  professorName: String,
-  nr_matricol: Number,
-  date: Date,
-  status: String,
-});
+const RequestsSchema=new Schema({
+    studentName:String,
+    professorName:String,
+    nr_matricol:Number,
+    date:Date,
+    status:String,});
+
+
+
 
 //model
 const Professors = mongoose.model('Professors', ProfessorsSchema);
