@@ -67,9 +67,6 @@ function Nav() {
         <Link to='/studentsListAdmin' className='nav-item'>
           <BsFillPeopleFill /> Students
         </Link>
-        <Link to='/profile' className='nav-item'>
-          <BsFillPersonFill /> Profile
-        </Link>
         <Link to='/requestsAdmin' className='nav-item'>
           <DiRequirejs /> Requests
         </Link>

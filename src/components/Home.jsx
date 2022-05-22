@@ -17,8 +17,9 @@ const Home = () => {
     <div className="home-page">
         <div className="layer">
             <Header/>
-            <Login/> 
-        </div>
+            <Login/>  
+            
+            </div>
       </div>
   );
 };
