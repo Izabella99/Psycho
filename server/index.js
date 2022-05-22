@@ -45,7 +45,8 @@ const StudentsSchema=new Schema({
     nr_matricol:Number,
     forma_de_inavatamant:String,
     specializare:String,
-    topic:String,});
+    topic:String,
+    coordinator:String});
 
 const RequestsSchema=new Schema({
     studentName:String,

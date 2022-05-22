@@ -5,6 +5,8 @@ import Header from './Header';
 import Login from './Login';
 import EditProfile from './EditProfile';
 import StudentsList from './StudentsList';
+import Dashboard from './AdminDashboard';
+import RequestsList from './RequestsList';
 
 
 const Home = () => {
@@ -15,7 +17,7 @@ const Home = () => {
         <div className="layer">
             {/* <Header/>
             <Login/>  */}
-            <StudentsList/>
+            <Dashboard/>
         </div>
       </div>
   );
