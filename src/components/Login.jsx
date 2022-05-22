@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom"
 import "../assets/css/Login.css";
 import '@fontsource/roboto/300.css';
 import Avatar from '@mui/material/Avatar';
@@ -11,16 +12,26 @@ import Container from '@mui/material/Container';
 import Header from './Header';
 
 
+
 const Login = () => {
   window.scrollTo(0, 0);
+  const navigate = useNavigate();
 
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-      console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-      });
+      const email = data.get('email')
+      const password = data.get('password')
+      let role;
+      if(email.includes('student')){
+        role = 'student';
+      } else if(email.includes('teacher')){
+        role = 'teacher'
+      }
+      localStorage.setItem('email', email)
+      localStorage.setItem('password', password)
+      localStorage.setItem('role', role)
+      navigate('/dashboard')
     };
 
   return (
