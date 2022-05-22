@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,14 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { professors } from '../../assets/dummy-data/professors-list';
 import Button from '@mui/material/Button';
+import axios from 'axios';
+import { TablePagination } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 export default function ProfessorsTable () {
 
   const [professors, setProfessors] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
-
-    const [modalShow, setModalShow] = React.useState(false);
+    let navigate = useNavigate();
     const [professorName, setProfessorName] = React.useState([]);
 
 
@@ -66,7 +68,7 @@ export default function ProfessorsTable () {
               <TableCell align="left">{professor.field}</TableCell>
               <TableCell align="left">{professor.nr_places_available}</TableCell>
               <TableCell>
-                <Button className="modal-toggle" variant="contained" onClick={() =>{ setModalShow(true); setProfessorName(professor.name);}}>Request</Button>
+                <Button variant="contained" onClick={() =>{ navigate('/profile', { state : { user : professor, userType : 'teacher'}})}}>Edit</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -83,11 +85,6 @@ export default function ProfessorsTable () {
     onRowsPerPageChange={handleChangeRowsPerPage}
   />
   </Paper>
-  <MyModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        name={professorName}
-      />
   
 
 </div>

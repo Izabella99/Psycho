@@ -7,6 +7,7 @@ import EditProfile from './EditProfile';
 import StudentsList from './StudentsList';
 import Dashboard from './AdminDashboard';
 import RequestsList from './RequestsList';
+import ProfessorsList from './admin/ProfessorsList';
 
 
 const Home = () => {
@@ -15,8 +16,9 @@ const Home = () => {
   return (
     <div className="home-page">
         <div className="layer">
-            <Header/>
-            <Login/> 
+            {/* <Header/>
+            <Login/>  */}
+            <ProfessorsList/>
         </div>
       </div>
   );
