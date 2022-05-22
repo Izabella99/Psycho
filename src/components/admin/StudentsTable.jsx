@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { students } from '../../assets/dummy-data/students-list';
 import Button from '@mui/material/Button';
+import EditProfile from '../EditProfile';
 
 export default class StudentsTable extends Component {
   render() {
@@ -34,7 +35,7 @@ export default class StudentsTable extends Component {
               <TableCell component="th" scope="row">
                 {student.student}
               </TableCell>
-              <TableCell align="right">{student.student}</TableCell>
+              <TableCell align="right" onClick={() => <EditProfile/>}>{student.student}</TableCell>
               <TableCell align="right">{student.field}</TableCell>
               <TableCell align="right">{student.nr_matricol}</TableCell>
               <TableCell align="right">{student.fdi}</TableCell>
