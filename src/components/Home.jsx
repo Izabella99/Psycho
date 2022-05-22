@@ -16,9 +16,8 @@ const Home = () => {
   return (
     <div className="home-page">
         <div className="layer">
-            {/* <Header/>
-            <Login/>  */}
-            <ProfessorsList/>
+            <Header/>
+            <Login/> 
         </div>
       </div>
   );
