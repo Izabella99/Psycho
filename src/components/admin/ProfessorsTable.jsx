@@ -12,15 +12,12 @@ import axios from 'axios';
 import { TablePagination } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
-export default function ProfessorsTable () {
+const ProfessorsTable = (props) => {
 
   const [professors, setProfessors] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
     let navigate = useNavigate();
-    const [professorName, setProfessorName] = React.useState([]);
-
-
     
     useEffect(() => {
 
@@ -68,7 +65,9 @@ export default function ProfessorsTable () {
               <TableCell align="left">{professor.field}</TableCell>
               <TableCell align="left">{professor.nr_places_available}</TableCell>
               <TableCell>
-                <Button variant="contained" onClick={() =>{ navigate('/profile', { state : { user : professor, userType : 'teacher'}})}}>Edit</Button>
+                <Button variant="contained" onClick={() =>{ 
+                  const aux = JSON.stringify({name : professor.name, email : professor.email, field : professor.field, nr_places : professor.nr_places, nr_places_available : professor.nr_places_available});
+                  navigate('/profile', { state : { user : aux, userType : 'teacher'}})}}>Edit</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -91,3 +90,5 @@ export default function ProfessorsTable () {
 
     );
 };
+
+export default ProfessorsTable;

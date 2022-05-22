@@ -15,11 +15,8 @@ import 'reactjs-popup/dist/index.css';
 import '../../assets/css/professors/StudentsList.css';
 import EditProfile from '../EditProfile';
 
-export const AppContext = createContext(null);
-
 
 const StudentsTable= (props) => {
-    const [user, setUser] = useState(null);
     const [students, setStudents] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
@@ -31,7 +28,6 @@ const StudentsTable= (props) => {
         .then((response)=>{
           const data=response.data; 
           setStudents(data);
-          setUser(data[0]);
         })
         .catch((error)=>{
           console.log("error",error);
@@ -48,8 +44,7 @@ const StudentsTable= (props) => {
     };
 
     return (
-      <AppContext.Provider value={{ user, setUser }}>
-      <div className="students">
+    <div className="students">
     <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "transparent" }}>
     <TableContainer sx={{ backgroundColor: "transparent",  maxHeight: 520  }}>
       <Table sx={{ minWidth: 500 }} stickyHeader aria-label="sticky table">
@@ -75,20 +70,19 @@ const StudentsTable= (props) => {
                   <p>Număr matricol:{student.nr_matricol}</p>
                   <p>Specializarea: {student.specializare}</p>
                   <p>Forma de învățământ: {student.forma_de_invatamant}</p>
-                  <p>Tema: {student.tema}</p>
+                  <p>Tema: {student.topic}</p>
                   <p>Coordonator: {student.coordinator}</p>
               </Popup>
               </TableCell>
-              <TableCell align="left">{student.tema}</TableCell>
+              <TableCell align="left">{student.topic}</TableCell>
               <TableCell>
                 <Button className="modal-toggle" variant="contained">Notă</Button>
               </TableCell>
               <TableCell>
                 <Button className="modal-toggle" variant="contained" onClick={() => 
                 {console.log(student);
-                setUser(student);
-                console.log(user);
-                navigate('/profile', { state : { user : student, userType : 'student'}})}}>Edit</Button>
+                const aux = JSON.stringify({nume : student.nume, email : student.email, nr_matricol : student.nr_matricol, specializare : student.specializare, forma_de_invatamant : student.forma_de_invatamant, topic : student.topic, coordinator : student.coordinator});
+                navigate('/profile', { state : { user : aux, userType : 'student'}})}}>Edit</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -107,7 +101,6 @@ const StudentsTable= (props) => {
   </Paper>
 
 </div>
-</AppContext.Provider>
 
     );
 }
