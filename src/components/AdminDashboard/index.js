@@ -16,12 +16,12 @@ import './index.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green'],
+let data = {
+  labels: ['Denied', 'Accepted', 'Rejected'],
   datasets: [
     {
       label: '# of Votes',
-      data: [12, 19, 3, 5],
+      data: [1, 5, 1],
       backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
@@ -133,6 +133,12 @@ const getRequestsInPending = () => {
 const getNoOfRequestsInPending = getRequestsInPending();
 const getNoOfRequests = requests.length;
 const getTotalNoOfStudents = students.length;
+
+data.datasets.data = [];
+data.datasets.data = [{getNoOfRequestsInPending}, {getNoOfRequestsAccepted}, {getNoOfRequestsDenied}];
+/*data.datasets.data[0] = {getNoOfRequestsInPending};
+data.datasets.data[1] = {getNoOfRequestsAccepted};
+data.datasets.data[2] = {getNoOfRequestsDenied};*/
 
   return (
     <div className='f-layer'>
