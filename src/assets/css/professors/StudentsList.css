@@ -91,6 +91,21 @@
     margin-top:3px;
 }
 
+#outlined-button {
+    height: 16px;
+    background-color: white;
+    padding: 15px 15px;
+    width: 200px !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #003060;
+    margin-top:3px;
+}
+
+#outlined-button:hover, .active {
+    background-color: #003060 !important;
+    color: white !important;
+}
 
 .popup-head{
     border-bottom: 1px solid rgb(190 191 193);
@@ -100,4 +115,11 @@
     width: 260px !important;
     padding: 10px 15px !important;
     color: rgba(114, 116, 119, 100);
+}
+
+.box-container {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }

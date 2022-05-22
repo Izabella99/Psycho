@@ -100,3 +100,20 @@ app.get('/api/requests',(req,res)=>{
         console.log('error: ',error)
     })
 });
+
+app.post('/api/students', (req,res) => {
+    
+    Students.updateOne(
+        { nr_matricol: req.body.nr_matricol},
+        { $set: {coordinator: req.body.coordinator}},
+        { upsert: true }
+    )
+    .then((response) => {
+        console.log(response);
+        res.json(response);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.json(error);
+    })
+})

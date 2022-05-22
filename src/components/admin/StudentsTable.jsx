@@ -13,7 +13,9 @@ import Popup from "reactjs-popup";
 import axios from 'axios';
 import 'reactjs-popup/dist/index.css';
 import '../../assets/css/professors/StudentsList.css';
-import EditProfile from '../EditProfile';
+import 'reactjs-popup/dist/index.css';
+import '../../assets/css/professors/StudentsList.css';
+import { Box, TextField } from '@material-ui/core';
 
 export const AppContext = createContext(null);
 
@@ -23,6 +25,17 @@ const StudentsTable= (props) => {
     const [students, setStudents] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    const [tab, setTab] = useState("students");
+    const [newStudent, setNewStudent] = useState({
+        nume: "",
+        email: "",
+        nr_matricol: "",
+        forma_de_invatamant: "",
+        specializare: "",
+        topic: "",
+        coordinator: ""
+    })
+    
     let navigate = useNavigate();
     
     useEffect(() => {
@@ -38,6 +51,17 @@ const StudentsTable= (props) => {
         })
     },[])
 
+    const addNewStudent = () => {
+      console.log(newStudent.nume);
+    }
+
+    const handleInputsChange = (e) => {
+      setNewStudent((prevState) => ({
+        ...prevState,
+        [e.target.id]: e.target.value  
+      }));
+    }
+
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
@@ -47,6 +71,15 @@ const StudentsTable= (props) => {
       setPage(0);
     };
 
+    const showStudents = () => {
+      setTab("students");
+    }
+
+    const showAddStudents = () => {
+      setTab("add");
+    }
+
+  if (tab === "students") {  
     return (
       <AppContext.Provider value={{ user, setUser }}>
       <div className="students">
@@ -107,8 +140,102 @@ const StudentsTable= (props) => {
   </Paper>
 
 </div>
-</AppContext.Provider>
-
+      </AppContext.Provider>
     );
+  } else {
+    return (
+      <div className="students">
+      <Button onClick={showStudents} id="outlined-button" variant="outlined">Students</Button>
+      <Button id="outlined-button" variant="outlined">Grades</Button>
+      <Button id="outlined-button" variant="outlined">History</Button>
+      <Button className='active' onClick={showAddStudents} id="outlined-button" variant="outlined">Add Student</Button>
+      <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "white",marginTop:"20px" }}>
+      <Box className="box-container">
+      <TextField
+        value={newStudent.nume}
+        required
+        fullWidth
+        id="nume"
+        label="Name"
+        name="nume"
+        autoComplete="Nume"
+        autoFocus
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.email}
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Email Address"
+        name="email"
+        autoComplete="email"
+        autoFocus
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.nr_matricol}
+        margin="normal"
+        required
+        fullWidth
+        name="nr_matricol"
+        label="Registration Number"
+        id="nr_matricol"
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.forma_de_invatamant}
+        margin="normal"
+        required
+        fullWidth
+        name="forma_de_invatamant"
+        label="Education Form"
+        id="forma_de_invatamant"
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.specializare}
+        margin="normal"
+        required
+        fullWidth
+        name="specializare"
+        label="Specialization"
+        id="specializare"
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.topic}
+        margin="normal"
+        required
+        fullWidth
+        name="topic"
+        label="Topic"
+        id="topic"
+        onChange={handleInputsChange}
+      />
+      <TextField
+        value={newStudent.coordinator}
+        margin="normal"
+        required
+        fullWidth
+        name="coordinator"
+        label="Coordinator"
+        id="coordinator"
+        onChange={handleInputsChange}
+      />
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+        onClick={addNewStudent}
+      >
+      Add student
+      </Button>
+      </Box>
+      </Paper>
+      </div>
+    );
+  }
 }
 export default StudentsTable;
