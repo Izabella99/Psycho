@@ -23,15 +23,19 @@ const StudentsTable= () => {
     
     useEffect(() => {
 
-        axios.get('http://localhost:3001/api/students')
-        .then((response)=>{
-          const data=response.data; 
-          setStudents(data);
-        })
-        .catch((error)=>{
-          console.log("error",error);
-        })
-    },[])
+      //call studentsByProfessor and set the params
+      axios.get('http://localhost:3001/api/students/coordinator', {
+        params: {
+          coordinator: localStorage.getItem('email')
+        }
+      })
+      .then(res => {
+        setStudents(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }, []);
 
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -41,6 +45,12 @@ const StudentsTable= () => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
+
+    const handleNota = (studentEmail) => {
+      localStorage.setItem('studentEmailForGrade', studentEmail);
+      //navigate to the page
+      window.location.href = '/gradeStudent';
+    }
 
     return (
       <div className="students">
@@ -75,7 +85,7 @@ const StudentsTable= () => {
               </TableCell>
               <TableCell align="left">{student.tema}</TableCell>
               <TableCell>
-                <Button className="modal-toggle" variant="contained">notă</Button>
+                <Button className="modal-toggle" variant="contained" onClick={() => {handleNota(student.email)}}>notă</Button>
               </TableCell>
             </TableRow>
           ))}
