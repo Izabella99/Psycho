@@ -93,6 +93,16 @@ function f() {
 
 setTimeout(f,5000);
 
+app.get('/api/availableProfessors', (req,res) => {
+  Professors.find({nr_places_available: {$gte: 0}})
+  .then((data) => {
+    res.json(data);
+  })
+  .catch((error) => {
+    console.log('error', error);
+  })
+})
+
 //Routes
 app.get('/api/professors',(req,res)=>{
     
