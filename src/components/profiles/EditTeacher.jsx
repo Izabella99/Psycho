@@ -8,14 +8,14 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 
 const EditProfileTeacher = (teacher) => {
-    const nameRef = useRef(teacher.nume);
+    const nameRef = useRef(teacher.name);
     const emailRef = useRef(teacher.email);
     const fieldRef = useRef(teacher.field);
     const noOfPlacesRef = useRef(teacher.nr_places);
     const noOfAvailablePlacesRef = useRef(teacher.nr_places_available);
 
 const updateTeacher = (newTeacher) => {
-    nameRef.current.value = newTeacher.nume;
+    nameRef.current.value = newTeacher.name;
     emailRef.current.value = newTeacher.email;
     fieldRef.current.value = newTeacher.nr_matricol;
     noOfPlacesRef.current.value = newTeacher.forma_de_invatamant;
@@ -23,8 +23,8 @@ const updateTeacher = (newTeacher) => {
     }
 
 const handleEdit = () => {
-    const teacher = {email : emailRef.current.value, nume : nameRef.current.value, field : fieldRef.current.value, nr_places : noOfPlacesRef.current.value, nr_places_available : noOfAvailablePlacesRef.current.value};
-    axios.post('http://localhost:3001/api/professors', teacher)
+    const teacher = {email : emailRef.current.value, name : nameRef.current.value, field : fieldRef.current.value, nr_places : noOfPlacesRef.current.value, nr_places_available : noOfAvailablePlacesRef.current.value};
+    axios.post('http://localhost:3001/api/professors/', teacher)
     .then(response => updateTeacher(response.data));
     };
 

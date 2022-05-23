@@ -7,6 +7,7 @@ import  '../../assets/css/students/Modal.css';
 
 
 export default function MyModal(props) {  
+
     return (
       <>
     <Modal
@@ -38,7 +39,7 @@ export default function MyModal(props) {
         </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>Close</Button>
-        <Button variant="primary" onClick={props.onHide}>Request</Button>
+        <Button variant="primary" onClick={props.onRequest }>Request</Button>
       </Modal.Footer>
     </Modal>
       </>

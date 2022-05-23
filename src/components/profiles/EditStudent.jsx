@@ -6,8 +6,11 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const EditProfileStudent = (student) => {
+const EditProfileStudent = (props) => {
+    const student = props.commonProps;
+    console.log(student);
     const nameRef = useRef(student.nume);
     const emailRef = useRef(student.email);
     const regNumberRef = useRef(student.nr_matricol);
@@ -15,6 +18,7 @@ const EditProfileStudent = (student) => {
     const specializationRef = useRef(student.specializare);
     const topicRef = useRef(student.topic);
     const coordinatorRef = useRef(student.coordinator);
+    let navigate = useNavigate();
 
 const updateStudent = (newStudent) => {
     nameRef.current.value = newStudent.nume;
@@ -28,8 +32,12 @@ const updateStudent = (newStudent) => {
 
 const handleEdit = () => {
     const student = {nume : nameRef.current.value, email : emailRef.current.value, nr_matricol : regNumberRef.current.value, forma_de_invatamant : edFormRef.current.value, specializare : specializationRef.current.value, topic : topicRef.current.value, coordinator : coordinatorRef.current.value};
-    axios.post('http://localhost:3001/api/students', student)
-    .then(response => updateStudent(response.data));
+    axios.post('http://localhost:3001/api/students/', student).catch((error)=>{
+        console.log("error",error);
+      })
+
+    const aux = JSON.stringify({nume : student.nume, email : student.email, nr_matricol : student.nr_matricol, specializare : student.specializare, forma_de_invatamant : student.forma_de_invatamant, topic : student.topic, coordinator : student.coordinator});
+    navigate('/profile', { state : { user : aux, userType : 'student'}});
     };
 
     return (
@@ -54,7 +62,6 @@ const handleEdit = () => {
                 fullWidth
                 id="name"
                 label="Name"
-                name="name"
                 autoComplete="Nume"
                 autoFocus
                 />
