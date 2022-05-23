@@ -10,6 +10,7 @@ import Chat from "./components/Chat";
 import Home from "./components/Home";
 import EditProfile from "./components/EditProfile";
 import AdminDashboard from './components/AdminDashboard'
+import GradeStudent from "./components/professors/GradeStudent";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="studentsListAdmin" element={<StudentsListAdmin />} />
         <Route path="professorsListAdmin" element={<ProfessorsListAdmin />} />
         <Route path="profile" element={<EditProfile />} />
+        <Route path="gradeStudent" element={<GradeStudent />}></Route>
         <Route path="/dashboard" element={<AdminDashboard />}></Route>
       </Routes>
   );
