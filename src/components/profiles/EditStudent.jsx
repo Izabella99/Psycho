@@ -69,7 +69,7 @@ const EditProfileStudent = (props) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                nr_matricol: "7832",
+                nr_matricol: student.nr_matricol,
                 coordinator: selectedProf
             }),
         }).then((res) => {
