@@ -2,11 +2,13 @@ const express=require("express");
 const mongoose=require("mongoose");
 const morgan=require("morgan");
 const cors=require("cors");
+const bodyParser = require('body-parser');
 require("dotenv").config();
 
 //app
 const app=express();
 app.use(express.json());
+app.use(bodyParser.json());
 
 //db
 mongoose
@@ -197,6 +199,7 @@ app.get('/api/students/coordinator',(req,res)=>{
 
             }
             );
+      });
 });
 
 //get students by coordinator name
@@ -239,6 +242,8 @@ app.get('/api/studentsByProfessor',(req,res)=>{
             console.log('error: ',error)
         })
 });
+}
+);
 
 app.patch('/api/students', bodyParser, (req,res) => {
 
@@ -372,12 +377,6 @@ app.get('/api/criteria',(req,res)=>{
     })
 });
 
-    })
-    .catch((error)=>{
-        console.log('error: ',error)
-    })
-});
-
 //get first instance of criterias
 app.get('/api/criteria',(req,res)=>{
     Criteria.findOne({})
@@ -416,8 +415,5 @@ app.post('/api/grade',(req,res)=>{
         .catch((error)=>{
             console.log('error: ',error)
         });
-        })
-        .catch((error)=>{
-            console.log('error: ',error)
-        });
+  })
 });
