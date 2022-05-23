@@ -139,6 +139,18 @@ app.get('/api/students',(req,res)=>{
     })
 });
 
+app.post('/api/student', bodyParser, (req, res) => {
+  const email = req.body.email;
+  Students.find({ email })
+    .then((data) => {
+      console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+    });
+});
+
 app.post('/api/professors', bodyParser, (req, res) => {
   Professors.create({
     name: req.body.name,
