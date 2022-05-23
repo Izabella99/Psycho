@@ -62,6 +62,19 @@ const StudentsTable= (props) => {
       setTab("students");
     }
 
+    const removeStudent = (e, stud_nr_matricol) => {
+      
+      axios.delete(`http://localhost:3001/api/students/${stud_nr_matricol}`, JSON.stringify(stud_nr_matricol))
+      .then((response) => {
+        setStudents(response.data);
+        console.log("Student deleted successfully");
+      })
+      .catch((error) => {
+        console.log("error",error);
+      })
+
+    }
+
     const handleInputsChange = (e) => {
       setNewStudent((prevState) => ({
         ...prevState,
@@ -101,7 +114,6 @@ const StudentsTable= (props) => {
             <TableCell>STUDENT </TableCell>
             <TableCell align="left">TEMA</TableCell>
             <TableCell align="right"></TableCell>
-            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -125,13 +137,16 @@ const StudentsTable= (props) => {
               </TableCell>
               <TableCell align="left">{student.topic}</TableCell>
               <TableCell>
-                <Button className="modal-toggle" variant="contained">Notă</Button>
-              </TableCell>
-              <TableCell>
+                <Button className="modal-toggle" variant="contained" sx={{marginRight: "20px"}}>Notă</Button>
+                
                 <Button className="modal-toggle" variant="contained" onClick={() => 
-                {console.log(student);
+                {
                 const aux = JSON.stringify({nume : student.nume, email : student.email, nr_matricol : student.nr_matricol, specializare : student.specializare, forma_de_invatamant : student.forma_de_invatamant, topic : student.topic, coordinator : student.coordinator});
                 navigate('/profile', { state : { user : aux, userType : 'student'}})}}>Edit</Button>
+                
+                <Button onClick={(e) => {removeStudent(e, student.nr_matricol) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                  Remove
+                </Button>
               </TableCell>
             </TableRow>
           ))}

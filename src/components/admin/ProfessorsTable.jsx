@@ -68,6 +68,19 @@ const ProfessorsTable = (props) => {
       setTab("professors");
     }
 
+    const removeProfessor = (e, email) => { 
+
+      axios.delete(`http://localhost:3001/api/professors/${email}`, JSON.stringify(email))
+      .then((response) => {
+        setProfessors(response.data);
+        console.log("Professor deleted successfully");
+      })
+      .catch((error) => {
+        console.log("error",error);
+      })
+
+    }
+
     const handleInputsChange = (e) => {
       setNewProfessor((prevState) => ({
         ...prevState,
@@ -111,9 +124,13 @@ const ProfessorsTable = (props) => {
               <TableCell align="left">{professor.field}</TableCell>
               <TableCell align="left">{professor.nr_places_available}</TableCell>
               <TableCell>
-                <Button variant="contained" onClick={() =>{ 
+                <Button sx={{marginRight: "10px"}} variant="contained" onClick={() =>{ 
                   const aux = JSON.stringify({name : professor.name, email : professor.email, field : professor.field, nr_places : professor.nr_places, nr_places_available : professor.nr_places_available});
                   navigate('/profile', { state : { user : aux, userType : 'teacher'}})}}>Edit</Button>
+
+                <Button onClick={(e) => {removeProfessor(e, professor.email) }} variant="contained">
+                  Remove
+                </Button>
               </TableCell>
             </TableRow>
           ))}
