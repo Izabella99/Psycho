@@ -107,6 +107,17 @@
     color: white !important;
 }
 
+#outlined-button-large {
+    height: 16px;
+    background-color: white;
+    padding: 15px 15px;
+    width: 400px !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #003060;
+    margin-top:3px;
+}
+
 .popup-head{
     border-bottom: 1px solid rgb(190 191 193);
 }

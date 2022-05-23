@@ -13,8 +13,6 @@ import Popup from "reactjs-popup";
 import axios from 'axios';
 import 'reactjs-popup/dist/index.css';
 import '../../assets/css/professors/StudentsList.css';
-import 'reactjs-popup/dist/index.css';
-import '../../assets/css/professors/StudentsList.css';
 import { Box, TextField } from '@material-ui/core';
 
 
@@ -24,7 +22,7 @@ const StudentsTable= (props) => {
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
     const [tab, setTab] = useState("students");
     const [newStudent, setNewStudent] = useState({
-        nume: "",
+        name: "",
         email: "",
         nr_matricol: "",
         forma_de_invatamant: "",
@@ -36,7 +34,6 @@ const StudentsTable= (props) => {
     let navigate = useNavigate();
     
     useEffect(() => {
-
         axios.get('http://localhost:3001/api/students')
         .then((response)=>{
           const data=response.data; 
@@ -47,8 +44,22 @@ const StudentsTable= (props) => {
         })
     },[])
 
-    const addNewStudent = () => {
-      console.log(newStudent.nume);
+    const addNewStudent = async () => {
+      
+      const result = await fetch('http://localhost:3001/api/students', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newStudent),
+      }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return res.text();
+      });
+
+      setTab("students");
     }
 
     const handleInputsChange = (e) => {
@@ -78,6 +89,10 @@ const StudentsTable= (props) => {
   if (tab === "students") {  
     return (
     <div className="students">
+    <Button className='active' onClick={showStudents} id="outlined-button" variant="outlined">Students</Button>
+    <Button id="outlined-button" variant="outlined">Grades</Button>
+    <Button id="outlined-button" variant="outlined">History</Button>
+    <Button onClick={showAddStudents} id="outlined-button" variant="outlined">Add Student</Button>
     <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "transparent" }}>
     <TableContainer sx={{ backgroundColor: "transparent",  maxHeight: 520  }}>
       <Table sx={{ minWidth: 500 }} stickyHeader aria-label="sticky table">
@@ -132,9 +147,7 @@ const StudentsTable= (props) => {
     onRowsPerPageChange={handleChangeRowsPerPage}
   />
   </Paper>
-
-</div>
-      </AppContext.Provider>
+    </div>
     );
   } else {
     return (
@@ -147,12 +160,13 @@ const StudentsTable= (props) => {
       <Box className="box-container">
       <TextField
         value={newStudent.nume}
+        margin="normal"
         required
         fullWidth
-        id="nume"
+        id="name"
         label="Name"
-        name="nume"
-        autoComplete="Nume"
+        name="name"
+        autoComplete="Name"
         autoFocus
         onChange={handleInputsChange}
       />

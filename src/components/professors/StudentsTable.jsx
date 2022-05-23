@@ -1,4 +1,4 @@
-import React,  { useState, useEffect, useRef} from 'react';
+import React,  { useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,41 +12,15 @@ import Popup from "reactjs-popup";
 import axios from 'axios';
 import 'reactjs-popup/dist/index.css';
 import '../../assets/css/professors/StudentsList.css';
-import { Box, TextField } from '@material-ui/core';
+
+
 
 const StudentsTable= () => {
 
     const [students, setStudents] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
-    const [tab, setTab] = useState("students");
-    const [newStudent, setNewStudent] = useState({
-        nume: "",
-        email: "",
-        nr_matricol: "",
-        forma_de_invatamant: "",
-        specializare: "",
-        topic: "",
-        coordinator: ""
-    })
-
-    const addNewStudent = () => {
-      axios.post('http://localhost:3001/api/students', newStudent)
-      .then(response => console.log(response));
-    }
-
-    const handleInputsChange = (e) => {
-      setNewStudent((prevState) => ({
-        ...prevState,
-        [e.target.id]: e.target.value  
-      }));
-    }
-
-    const handleEdit = () => {
-      //axios.post('http://localhost:3001/api/students', student)
-      //.then(response => updateStudent(response.data));
-    };
-
+    
     useEffect(() => {
 
         axios.get('http://localhost:3001/api/students')
@@ -55,9 +29,8 @@ const StudentsTable= () => {
           setStudents(data);
         })
         .catch((error)=>{
-          console.log("error", error);
+          console.log("error",error);
         })
-
     },[])
 
     const handleChangePage = (event, newPage) => {
@@ -69,166 +42,59 @@ const StudentsTable= () => {
       setPage(0);
     };
 
-    const showStudents = () => {
-      setTab("students");
-    }
+    return (
+      <div className="students">
+    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "transparent" }}>
+    <TableContainer sx={{ backgroundColor: "transparent",  maxHeight: 520  }}>
+      <Table sx={{ minWidth: 500 }} stickyHeader aria-label="sticky table">
+        <TableHead >
+          <TableRow>
+            <TableCell>STUDENT </TableCell>
+            <TableCell align="left">TEMA</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {students
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((student) => (
+            <TableRow key={student.id}>
+              <TableCell component="th" scope="row" width="40%"> {student.name}
+              <Popup trigger={<Button id="info-button"> i</Button>} position="bottom center">
+                
+                  <div className="popup-head">
+                    <p style={{color:'#003060',fontWeight:"700"}}>{student.name}</p>
+                    <p>{student.email}</p>
+                  </div>
+                  <p>Număr matricol:{student.nr_matricol}</p>
+                  <p>Specializarea: {student.specializare}</p>
+                  <p>Forma de învățământ: {student.forma_de_invatamant}</p>
+                  <p>Tema: {student.tema}</p>
+              </Popup>
 
-    const showAddStudents = () => {
-      setTab("add");
-    }
-
-    if (tab === "students") {
-      return (
-        <div className="students">
-      <Button className="active" onClick={showStudents} id="outlined-button" variant="outlined" active>Students</Button>
-      <Button id="outlined-button" variant="outlined">Grades</Button>
-      <Button id="outlined-button" variant="outlined">History</Button>
-      <Button onClick={showAddStudents} id="outlined-button" variant="outlined">Add Student</Button>
-      <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "transparent" }}>
-      <TableContainer sx={{ backgroundColor: "transparent",  maxHeight: 520  }}>
-        <Table sx={{ minWidth: 500 }} stickyHeader aria-label="sticky table">
-          <TableHead >
-            <TableRow>
-              <TableCell>STUDENT </TableCell>
-              <TableCell align="left">TEMA</TableCell>
-              <TableCell align="right"></TableCell>
+              </TableCell>
+              <TableCell align="left">{student.tema}</TableCell>
+              <TableCell>
+                <Button className="modal-toggle" variant="contained">notă</Button>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {students
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((student) => (
-              <TableRow key={student.id}>
-                <TableCell component="th" scope="row" width="40%"> {student.nume}
-                <Popup trigger={<Button id="info-button"> i</Button>} position="bottom center">
-                  
-                    <div className="popup-head">
-                      <p style={{color:'#003060',fontWeight:"700"}}>{student.nume}</p>
-                      <p>{student.email}</p>
-                    </div>
-                    <p>Număr matricol:{student.nr_matricol}</p>
-                    <p>Specializarea: {student.specializare}</p>
-                    <p>Forma de învățământ: {student.forma_de_invatamant}</p>
-                    <p>Tema: {student.tema}</p>
-                </Popup>
-  
-                </TableCell>
-                <TableCell align="left">{student.tema}</TableCell>
-                <TableCell>
-                  <Button className="modal-toggle" variant="contained">notă</Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-      rowsPerPageOptions={[3, 6, 9]}
-      component="div"
-      count={students.length}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onPageChange={handleChangePage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />
-    </Paper>
-        </div>
-      );
-    } else {
-      return (
-        <div className="students">
-    <Button onClick={showStudents} id="outlined-button" variant="outlined">Students</Button>
-    <Button id="outlined-button" variant="outlined">Grades</Button>
-    <Button id="outlined-button" variant="outlined">History</Button>
-    <Button className='active' onClick={showAddStudents} id="outlined-button" variant="outlined">Add Student</Button>
-    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor: "white",marginTop:"20px" }}>
-      <Box className="box-container">
-      <TextField
-        value={newStudent.nume}
-        required
-        fullWidth
-        id="nume"
-        label="Name"
-        name="nume"
-        autoComplete="Nume"
-        autoFocus
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.email}
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        label="Email Address"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.nr_matricol}
-        margin="normal"
-        required
-        fullWidth
-        name="nr_matricol"
-        label="Registration Number"
-        id="nr_matricol"
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.forma_de_invatamant}
-        margin="normal"
-        required
-        fullWidth
-        name="forma_de_invatamant"
-        label="Education Form"
-        id="forma_de_invatamant"
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.specializare}
-        margin="normal"
-        required
-        fullWidth
-        name="specializare"
-        label="Specialization"
-        id="specializare"
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.topic}
-        margin="normal"
-        required
-        fullWidth
-        name="topic"
-        label="Topic"
-        id="topic"
-        onChange={handleInputsChange}
-      />
-      <TextField
-        value={newStudent.coordinator}
-        margin="normal"
-        required
-        fullWidth
-        name="coordinator"
-        label="Coordinator"
-        id="coordinator"
-        onChange={handleInputsChange}
-      />
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={addNewStudent}
-      >
-      Add student
-      </Button>
-      </Box>
-    </Paper>
-        </div>
-      );
-  }
-}
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <TablePagination
+    rowsPerPageOptions={[3, 6, 9]}
+    component="div"
+    count={students.length}
+    rowsPerPage={rowsPerPage}
+    page={page}
+    onPageChange={handleChangePage}
+    onRowsPerPageChange={handleChangeRowsPerPage}
+  />
+  </Paper>
 
+</div>
+
+    );
+}
 export default StudentsTable;

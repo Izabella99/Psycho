@@ -37,7 +37,6 @@ const Login = () => {
         }
         return res.text();
       });
-      console.log('user', user[0].name);
       role = 'student';
       localStorage.setItem('name', user[0].name);
       localStorage.setItem('email', email);
@@ -59,7 +58,6 @@ const Login = () => {
         }
         return res.text();
       });
-      console.log('user', professor);
 
       role = 'professor';
       localStorage.setItem('name', professor[0].name);
