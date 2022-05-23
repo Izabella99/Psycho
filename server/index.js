@@ -54,13 +54,34 @@ const RequestsSchema=new Schema({
     date:Date,
     status:String,});
 
-
+    const StudentsTeachersSchema = new Schema({
+      studentEmail:String,
+      professorEmail:String,
+  });
+  
+  const GradesSchema = new Schema({
+      studentEmail:String,
+      professorEmail:String,
+      criteria1Grade:Number,
+      criteria2Grade:Number,
+      criteria3Grade:Number,
+      finalGrade: Number,
+  });
+  
+  const CriteriaSchema = new Schema({
+      criteria1: String,
+      criteria2: String,
+      criteria3: String,
+  });
 
 
 //model
 const Professors = mongoose.model('Professors', ProfessorsSchema);
 const Students = mongoose.model('Students', StudentsSchema);
 const Requests = mongoose.model('Requests', RequestsSchema);
+const StudentsTeachers=mongoose.model('StudentsTeachers',StudentsTeachersSchema);
+const Grades=mongoose.model('Grades',GradesSchema);
+const Criteria=mongoose.model('Criteria',CriteriaSchema);
 
 //Routes
 
@@ -298,4 +319,91 @@ app.patch('/api/requests', bodyParser, (req, res) => {
     .catch((error) => {
       console.log('error: ', error);
     });
+});
+
+//find all students by teacherEmail
+app.get('/api/studentsByProfessor',(req,res)=>{
+  console.log(req.query.teacherEmail);
+  StudentsTeachers.find({professorEmail:req.query.professorEmail})
+  .then((data)=> {
+      //for each student email, find it in Students
+      console.log('Data: ',data);
+      let studentsEmails=[];
+      data.forEach(element => {
+          studentsEmails.push(element.studentEmail);
+      }
+      );
+      console.log('studentsEmails: ',studentsEmails);
+      Students.find({email:{$in:studentsEmails}})
+      .then((data)=> {
+          console.log('Data: ',data);
+          res.json(data);
+      })
+      .catch((error)=>{
+          console.log('error: ',error)
+      })
+  })
+  .catch((error)=>{
+      console.log('error: ',error)
+  })
+});
+
+//get students by coordinator name
+app.get('/api/students/coordinator',(req,res)=>{
+  //get professor by email
+  Professors.find({email:req.query.coordinator})
+  .then((data)=> {
+      //get students by cooordinator
+      Students.find({coordinator:data[0].name}).then((data2)=>{
+          console.log('Data: ',data2);
+          res.json(data2);
+
+      }
+      );
+  })
+  .catch((error)=>{
+      console.log('error: ',error)
+  })
+});
+
+//get first instance of criterias
+app.get('/api/criteria',(req,res)=>{
+  Criteria.findOne({})
+  .then((data)=> {
+      console.log('Data: ',data);
+      res.json(data);
+  })
+  .catch((error)=>{
+      console.log('error: ',error)
+  })
+});
+
+//save grades (or update if it is the case)
+app.get('/api/grade',(req,res)=>{
+  console.log('1111111111111111111111111111', req.query);
+
+  //delete all by student email
+  Grades.deleteMany({studentEmail:req.query.studentEmail}).then(()=>{
+      //save new grades
+      Grades.create(req.query)
+      .then((data)=> {
+          console.log('Data: ',data);
+          res.json(data);
+      })
+      .catch((error)=>{
+          console.log('error: ',error)
+      })
+  });
+});
+
+//get grades by student email
+app.get('/api/grades',(req,res)=>{
+  Grades.find({studentEmail:req.query.studentEmail})
+  .then((data)=> {
+      console.log('Data: ',data);
+      res.json(data);
+  })
+  .catch((error)=>{
+      console.log('error: ',error)
+  });
 });

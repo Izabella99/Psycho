@@ -27,20 +27,25 @@ class GradeStudent extends Component {
     }
 
     handleSubmit = () => {
-        axios.post('http://localhost:3001/api/grade', {
-            
-            studentEmail: localStorage.getItem('studentEmailForGrade'),
-            professorEmail: localStorage.getItem('email'),
-            criteria1Grade: this.state.grade1,
-            criteria2Grade: this.state.grade2,
-            criteria3Grade: this.state.grade3,
-            finalGrade: this.state.medie
+        axios.get('http://localhost:3001/api/grade', {
+            params: {
+                studentEmail: localStorage.studentEmailForGrade,
+                professorEmail: localStorage.email,
+                criteria1Grade: this.state.grade1,
+                criteria2Grade: this.state.grade2,
+                criteria3Grade: this.state.grade3,
+                finalGrade: this.state.medie
+            }
             
         })
         .then(function (response) {
+            console.log(response);
         })
         .catch(function (error) {
         });
+        setTimeout(() => {        
+            window.location.href = '/students';}
+            ,0);
     }
 
     constructor(props) {
