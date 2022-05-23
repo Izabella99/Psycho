@@ -63,6 +63,9 @@ const Students = mongoose.model('Students', StudentsSchema);
 const Requests = mongoose.model('Requests', RequestsSchema);
 
 //Routes
+
+// PROFESSORS
+
 app.get('/api/professors', (req, res) => {
   Professors.find({})
     .then((data) => {
@@ -113,6 +116,20 @@ app.post('/api/professors', bodyParser, (req, res) => {
     res.json(error);
   })
 });
+
+app.delete('/api/professors/:id', (req,res) => {
+
+  Professors.findOneAndRemove({ email: req.params.id })
+  .then(() => {
+    Professors.find({})
+    .then((data) => res.json(data))
+    .catch((error) => console.log("error", error));
+  })
+  .catch((error) => console.log("error", error));
+
+})
+
+// STUDENTS
 
 app.get('/api/students', (req, res) => {
   Students.find({})
@@ -165,6 +182,60 @@ app.patch('/api/students', bodyParser, (req,res) => {
   .error((error) => console.log("error", error));
 
 }) 
+
+app.post('/api/students', bodyParser, (req, res) => {
+  Students.create({
+    name: req.body.name,
+    email: req.body.email,
+    nr_matricol: req.body.nr_matricol,
+    forma_de_invatamant: req.body.forma_de_invatamant,
+    specializare: req.body.specializare,
+    topic: req.body.topic,
+    coordinator: req.body.coordinator 
+  })
+  .then((response) => {
+    console.log(response);
+    res.json(response);
+  })
+  .catch((error) => {
+    console.log(error);
+    res.json(error);
+  })
+});
+
+app.patch('/api/students', bodyParser, (req,res) => {
+
+  Students.updateOne(
+  {
+    nr_matricol: req.body.nr_matricol,
+  },
+  {
+    coordinator: req.body.coordinator,
+  }
+  )
+  .then((data) => {
+    console.log('Data inserted: ', data);
+    res.json(data);
+  })
+  .catch((error) => {
+    console.log('error: ', error);
+  });
+
+})
+
+app.delete('/api/students/:id', (req,res) => {
+
+  Students.findOneAndRemove({ nr_matricol: req.params.id })
+  .then(() => {
+    Students.find({})
+    .then((data) => res.json(data))
+    .catch((error) => console.log("error", error));
+  })
+  .catch((error) => console.log("error", error));
+
+})
+
+// REQUESTS
 
 app.get('/api/requests', (req, res) => {
   Requests.find({})
@@ -228,45 +299,3 @@ app.patch('/api/requests', bodyParser, (req, res) => {
       console.log('error: ', error);
     });
 });
-
-app.post('/api/students', bodyParser, (req, res) => {
-  Students.create({
-    name: req.body.name,
-    email: req.body.email,
-    nr_matricol: req.body.nr_matricol,
-    forma_de_invatamant: req.body.forma_de_invatamant,
-    specializare: req.body.specializare,
-    topic: req.body.topic,
-    coordinator: req.body.coordinator 
-  })
-  .then((response) => {
-    console.log(response);
-    res.json(response);
-  })
-  .catch((error) => {
-    console.log(error);
-    res.json(error);
-  })
-});
-
-app.patch('/api/students', bodyParser, (req,res) => {
-
-  console.log(req.body);
-
-  Students.updateOne(
-  {
-    nr_matricol: req.body.nr_matricol,
-  },
-  {
-    coordinator: req.body.coordinator,
-  }
-  )
-  .then((data) => {
-    console.log('Data inserted: ', data);
-    res.json(data);
-  })
-  .catch((error) => {
-    console.log('error: ', error);
-  });
-
-})
