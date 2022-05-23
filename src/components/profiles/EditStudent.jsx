@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import CoordinatorModal from './CoordinatorModal';
 
 const EditProfileStudent = (props) => {
+    console.log(props.commonProps.name);
     const student = props.commonProps;
     const nameRef = useRef(student.nume);
     const emailRef = useRef(student.email);
@@ -107,6 +108,7 @@ const EditProfileStudent = (props) => {
             <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
                 ref={nameRef}
+                value={props.commonProps.name}
                 margin="normal"
                 required
                 fullWidth
@@ -118,6 +120,7 @@ const EditProfileStudent = (props) => {
                 <TextField
                 ref={emailRef}
                 margin="normal"
+                value={props.commonProps.email}
                 required
                 fullWidth
                 id="email"
@@ -137,6 +140,7 @@ const EditProfileStudent = (props) => {
                 />
                 <TextField
                 ref={edFormRef}
+                value={props.commonProps['forma_de_invatamant']}
                 margin="normal"
                 required
                 fullWidth
@@ -146,6 +150,8 @@ const EditProfileStudent = (props) => {
                 />
                 <TextField
                 ref={specializationRef}
+                value={props.commonProps.specializare}
+
                 margin="normal"
                 required
                 fullWidth

@@ -60,7 +60,7 @@ const Login = () => {
       });
 
       role = 'professor';
-      localStorage.setItem('name', professor[0].name);
+      localStorage.setItem('name', professor[0].name || 'Professor');
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
       localStorage.setItem('role', role);
@@ -81,7 +81,7 @@ const Login = () => {
         return res.text();
       });
       role = 'admin';
-      localStorage.setItem('name', admin[0].name);
+      localStorage.setItem('name', admin[0].name || 'Admin');
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
       localStorage.setItem('role', role);
