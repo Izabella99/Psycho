@@ -1,4 +1,4 @@
-import React, { Component, useRef, useState } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,10 +7,10 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import CoordinatorModal from './CoordinatorModal';
 
 const EditProfileStudent = (props) => {
     const student = props.commonProps;
-    console.log(student);
     const nameRef = useRef(student.nume);
     const emailRef = useRef(student.email);
     const regNumberRef = useRef(student.nr_matricol);
@@ -18,19 +18,24 @@ const EditProfileStudent = (props) => {
     const specializationRef = useRef(student.specializare);
     const topicRef = useRef(student.topic);
     const coordinatorRef = useRef(student.coordinator);
+
+    const [modalShow, setModalShow] = useState(false); 
+    const [professors, setProfessors] = useState([]);
+    const [selectedProf, setSelectedProf] = useState("");
+
     let navigate = useNavigate();
 
-const updateStudent = (newStudent) => {
-    nameRef.current.value = newStudent.nume;
-    emailRef.current.value = newStudent.email;
-    regNumberRef.current.value = newStudent.nr_matricol;
-    edFormRef.current.value = newStudent.forma_de_invatamant;
-    specializationRef.current.value = newStudent.specializare;
-    topicRef.current.value = newStudent.topic;
-    coordinatorRef.current.value = newStudent.coordinator;
+    const updateStudent = (newStudent) => {
+        nameRef.current.value = newStudent.nume;
+        emailRef.current.value = newStudent.email;
+        regNumberRef.current.value = newStudent.nr_matricol;
+        edFormRef.current.value = newStudent.forma_de_invatamant;
+        specializationRef.current.value = newStudent.specializare;
+        topicRef.current.value = newStudent.topic;
+        coordinatorRef.current.value = newStudent.coordinator;
     }
 
-const handleEdit = () => {
+    const handleEdit = () => {
     const student = {nume : nameRef.current.value, email : emailRef.current.value, nr_matricol : regNumberRef.current.value, forma_de_invatamant : edFormRef.current.value, specializare : specializationRef.current.value, topic : topicRef.current.value, coordinator : coordinatorRef.current.value};
     axios.post('http://localhost:3001/api/students/', student).catch((error)=>{
         console.log("error",error);
@@ -39,6 +44,51 @@ const handleEdit = () => {
     const aux = JSON.stringify({nume : student.nume, email : student.email, nr_matricol : student.nr_matricol, specializare : student.specializare, forma_de_invatamant : student.forma_de_invatamant, topic : student.topic, coordinator : student.coordinator});
     navigate('/profile', { state : { user : aux, userType : 'student'}});
     };
+
+    useEffect(() => {
+        axios
+          .get('http://localhost:3001/api/availableProfessors')
+          .then((response) => {
+            setProfessors(response.data);
+            console.log('Data has been Recived');
+          })
+          .catch((error) => {
+            console.log('error', error);
+          });
+    }, []);
+
+    const handleSelectCoordinator = (prof) => {
+        setSelectedProf(prof);
+    }
+
+    const onAddCoordinator = async () => {
+        const result = await fetch('http://localhost:3001/api/students', {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nr_matricol: "7832",
+                coordinator: selectedProf
+            }),
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            return res.text();
+        });
+
+        navigate('/studentsListAdmin');
+    }
+
+    const onModalShow = () => { setModalShow(true); }
+
+    const onModalHide = () => { 
+        setModalShow(false); 
+        if (selectedProf) {
+            onAddCoordinator();
+        }
+    }
 
     return (
         <Container 
@@ -128,10 +178,28 @@ const handleEdit = () => {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleEdit}
                 >
-                Edit
+                    Edit
                 </Button>
+                {
+                    !student.coordinator ? 
+                    (<Button 
+                    fullWidth
+                    variant="contained"
+                    sx={{ mb: 2, backgroundColor: "gray" }}
+                    onClick={onModalShow}>
+                    Add coordinator
+                    </Button>) 
+                    : (<span></span>)
+                }
             </Box>
             </Box>
+            <CoordinatorModal 
+                show={modalShow}
+                onHide={onModalHide}
+                name={"Assign coordinator for student"}
+                professors={professors}
+                onSelectCoordinator={handleSelectCoordinator}
+            />
         </Container> 
     )
 };

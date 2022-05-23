@@ -74,6 +74,16 @@ app.get('/api/professors', (req, res) => {
     });
 });
 
+app.get('/api/availableProfessors', (req,res) => {
+  Professors.find({nr_places_available: {$gte: 0}})
+  .then((data) => {
+    res.json(data);
+  })
+  .catch((error) => {
+    console.log('error', error);
+  })
+})
+
 app.post('/api/professor', bodyParser, (req, res) => {
   const email = req.body.email;
   Professors.find({ email })
@@ -126,6 +136,35 @@ app.post('/api/student', bodyParser, (req, res) => {
       console.log('error: ', error);
     });
 });
+
+app.patch('/api/students', bodyParser, (req,res) => {
+
+  Students.updateOne(
+  {
+    nr_matricol: req.body.nr_matricol,
+  },
+  {
+    coordinator: req.body.coordinator,
+  })
+  .then((data) => {
+    console.log('Data inserted: ', data);
+    res.json(data);
+  })
+  .catch((error) => {
+    console.log('error: ', error);
+  });
+
+  Professors.updateOne(
+  {
+    name: req.body.coordinator,
+  },
+  {
+    $inc: {nr_places_available: -1},
+  })
+  .then((data) => console.log("Updated professor successfully!"))
+  .error((error) => console.log("error", error));
+
+}) 
 
 app.get('/api/requests', (req, res) => {
   Requests.find({})
