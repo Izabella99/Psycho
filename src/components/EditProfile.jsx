@@ -62,7 +62,7 @@ const getCurrentStudent = () => {
     const role = localStorage.getItem('role');
     if (role === 'student') {
         const user1 = getCurrentStudent();
-        const aux = JSON.stringify({nume : user1.nume, email : user1.email, nr_matricol : user1.nr_matricol, specializare : user1.specializare, forma_de_invatamant : user1.forma_de_invatamant, topic : user1.topic, coordinator : user1.coordinator});
+        const aux = JSON.stringify({name : user1.name, email : user1.email, nr_matricol : user1.nr_matricol, specializare : user1.specializare, forma_de_invatamant : user1.forma_de_invatamant, topic : user1.topic, coordinator : user1.coordinator});
         return (
             <div className="home-page">
                 <div className="layer">
@@ -87,7 +87,7 @@ const getCurrentStudent = () => {
         const user1 = JSON.parse(location.state.user);
         const userType = location.state.userType;
         if (userType == 'student') {
-            const aux = JSON.stringify({nume : user1.nume, email : user1.email, nr_matricol : user1.nr_matricol, specializare : user1.specializare, forma_de_invatamant : user1.forma_de_invatamant, topic : user1.topic, coordinator : user1.coordinator});
+            const aux = JSON.stringify({name : user1.name, email : user1.email, nr_matricol : user1.nr_matricol, specializare : user1.specializare, forma_de_invatamant : user1.forma_de_invatamant, topic : user1.topic, coordinator : user1.coordinator});
             return (
                 <div className="home-page">
                     <div className="layer">

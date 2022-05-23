@@ -42,7 +42,7 @@ const StudentsSchema=new Schema({
     name:String,
     email:String,
     nr_matricol:Number,
-    forma_de_inavatamant:String,
+    forma_de_invatamant:String,
     specializare:String,
     topic:String,
     coordinator:String});
@@ -84,6 +84,24 @@ app.post('/api/professor', bodyParser, (req, res) => {
     .catch((error) => {
       console.log('error: ', error);
     });
+});
+
+app.post('/api/professors', bodyParser, (req, res) => {
+  Professors.create({
+    name: req.body.name,
+    email: req.body.email,
+    field: req.body.field,
+    nr_places: req.body.nr_places,
+    nr_places_available: req.body.nr_places_available
+  })
+  .then((response) => {
+    console.log(typeof(req.body.nr_places));
+    res.json(response);
+  })
+  .catch((error) => {
+    console.log(error);
+    res.json(error);
+  })
 });
 
 app.get('/api/students', (req, res) => {
@@ -171,3 +189,45 @@ app.patch('/api/requests', bodyParser, (req, res) => {
       console.log('error: ', error);
     });
 });
+
+app.post('/api/students', bodyParser, (req, res) => {
+  Students.create({
+    name: req.body.name,
+    email: req.body.email,
+    nr_matricol: req.body.nr_matricol,
+    forma_de_invatamant: req.body.forma_de_invatamant,
+    specializare: req.body.specializare,
+    topic: req.body.topic,
+    coordinator: req.body.coordinator 
+  })
+  .then((response) => {
+    console.log(response);
+    res.json(response);
+  })
+  .catch((error) => {
+    console.log(error);
+    res.json(error);
+  })
+});
+
+app.patch('/api/students', bodyParser, (req,res) => {
+
+  console.log(req.body);
+
+  Students.updateOne(
+  {
+    nr_matricol: req.body.nr_matricol,
+  },
+  {
+    coordinator: req.body.coordinator,
+  }
+  )
+  .then((data) => {
+    console.log('Data inserted: ', data);
+    res.json(data);
+  })
+  .catch((error) => {
+    console.log('error: ', error);
+  });
+
+})
