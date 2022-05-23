@@ -104,25 +104,15 @@ app.get('/api/professors',(req,res)=>{
     })
 });
 
-app.get('/api/availableProfessors', (req,res) => {
-  Professors.find({nr_places_available: {$gte: 0}})
-  .then((data) => {
-    res.json(data);
-  })
-  .catch((error) => {
-    console.log('error', error);
-  })
-})
-
-app.post('/api/professor', bodyParser, (req, res) => {
-  const email = req.body.email;
-  Professors.find({ email })
-    .then((data) => {
-      console.log('Data: ', data);
-      res.json(data);
+app.get('/api/students',(req,res)=>{
+    
+    Students.find({ })
+    .then((data)=> {
+        console.log('Data: ',data);
+        res.json(data);
     })
-    .catch((error) => {
-      console.log('error: ', error);
+    .catch((error)=>{
+        console.log('error: ',error)
     })
 });
 app.get('/api/students',(req,res)=>{
@@ -169,11 +159,15 @@ app.delete('/api/professors/:id', (req,res) => {
 
 // STUDENTS
 
-app.get('/api/students', (req, res) => {
-  Students.find({})
-    .then((data) => {
-      console.log('Data: ', data);
-      res.json(data);
+app.get('/api/requests',(req,res)=>{
+    
+    Requests.find({ })
+    .then((data)=> {
+        console.log('Data: ',data);
+        res.json(data);
+    })
+    .catch((error)=>{
+        console.log('error: ',error)
     })
     .catch((error) => {
       console.log('error: ', error);
@@ -203,6 +197,43 @@ app.get('/api/students/coordinator',(req,res)=>{
 
             }
             );
+});
+
+//get students by coordinator name
+app.get('/api/students/coordinator',(req,res)=>{
+        //get professor by email
+        Professors.find({email:req.query.coordinator})
+        .then((data)=> {
+            //get students by cooordinator
+            Students.find({coordinator:data[0].name}).then((data2)=>{
+                console.log('Data: ',data2);
+                res.json(data2);
+
+            }
+            );
+        })
+        .catch((error)=>{
+            console.log('error: ',error)
+        })
+});
+
+//find all students by teacherEmail
+app.get('/api/studentsByProfessor',(req,res)=>{
+    console.log(req.query.teacherEmail);
+    StudentsTeachers.find({professorEmail:req.query.professorEmail})
+    .then((data)=> {
+        //for each student email, find it in Students
+        console.log('Data: ',data);
+        let studentsEmails=[];
+        data.forEach(element => {
+            studentsEmails.push(element.studentEmail);
+        }
+        );
+        console.log('studentsEmails: ',studentsEmails);
+        Students.find({email:{$in:studentsEmails}})
+        .then((data)=> {
+            console.log('Data: ',data);
+            res.json(data);
         })
         .catch((error)=>{
             console.log('error: ',error)
@@ -341,6 +372,24 @@ app.get('/api/criteria',(req,res)=>{
     })
 });
 
+    })
+    .catch((error)=>{
+        console.log('error: ',error)
+    })
+});
+
+//get first instance of criterias
+app.get('/api/criteria',(req,res)=>{
+    Criteria.findOne({})
+    .then((data)=> {
+        console.log('Data: ',data);
+        res.json(data);
+    })
+    .catch((error)=>{
+        console.log('error: ',error)
+    })
+});
+
 //get grades by student email
 app.get('/api/grades',(req,res)=>{
     Grades.find({studentEmail:req.query.studentEmail})
@@ -367,5 +416,8 @@ app.post('/api/grade',(req,res)=>{
         .catch((error)=>{
             console.log('error: ',error)
         });
-    });
+        })
+        .catch((error)=>{
+            console.log('error: ',error)
+        });
 });
