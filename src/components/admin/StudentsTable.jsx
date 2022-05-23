@@ -101,6 +101,7 @@ const StudentsTable= (props) => {
             <TableCell>STUDENT </TableCell>
             <TableCell align="left">TEMA</TableCell>
             <TableCell align="right"></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
